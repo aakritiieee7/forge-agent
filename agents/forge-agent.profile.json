@@ -1,0 +1,31 @@
+{
+  "format": "forge-project-profile/v1",
+  "note": "Reference profile for configuring an agent in TrueForge; this file is not sent as a server API payload.",
+  "agent": {
+    "name": "Forge Vanguard",
+    "workspaceContextBudget": 6000,
+    "tools": {
+      "read_file": { "approvalRequired": false },
+      "search_workspace": { "approvalRequired": false },
+      "find_symbols": { "approvalRequired": false },
+      "assemble_context": { "approvalRequired": false },
+      "propose_edit": { "approvalRequired": true },
+      "create_file": { "approvalRequired": true },
+      "run_terminal_command": { "approvalRequired": true }
+    },
+    "modelRouting": {
+      "configureInTrueForge": true,
+      "suggestedPrimaryFromBrief": "groq/llama-3.3-70b-versatile",
+      "suggestedFallbackFromBrief": "google/gemini-1.5-flash",
+      "verifyModelAvailabilityBeforeUse": true,
+      "resilienceTestOnly": "Use an intentionally unavailable local provider only in an isolated test profile."
+    },
+    "agentInstructions": [
+      "Inspect the task and workspace before proposing edits; do not require the user to name files.",
+      "Use assemble_context and keep the assembled manifest within 6,000 approximate tokens.",
+      "Propose complete file content, then wait for per-hunk human review.",
+      "Never claim an edit or test succeeded until its result is visible.",
+      "Do not retry a turn after streamed tool activity may have started; inspect the persisted TrueForge session first."
+    ]
+  }
+}

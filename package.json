@@ -1,0 +1,64 @@
+{
+  "name": "forge-vscode-agent",
+  "displayName": "Forge — TrueForge Coding Agent",
+  "description": "A VS Code-native coding agent that delegates reasoning and model routing to TrueForge.",
+  "version": "0.1.0",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.95.0",
+    "node": ">=22.14.0"
+  },
+  "categories": ["Other"],
+  "activationEvents": ["onStartupFinished"],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      { "command": "forge.openPanel", "title": "Forge: Open Agent" },
+      { "command": "forge.setTrueForgeToken", "title": "Forge: Set TrueForge Token" },
+      { "command": "forge.applyApprovedEdits", "title": "Forge: Apply Approved Hunks" },
+      { "command": "forge.copyMcpUrl", "title": "Forge: Copy Local MCP URL" },
+      { "command": "forge.cancelTurn", "title": "Forge: Cancel Agent Turn" }
+    ],
+    "configuration": {
+      "title": "Forge Agent",
+      "properties": {
+        "forge.baseUrl": {
+          "type": "string",
+          "default": "http://127.0.0.1:8000",
+          "description": "Base URL of the TrueForge server. Keep local mode bound to localhost."
+        },
+        "forge.sessionId": {
+          "type": "string",
+          "default": "",
+          "description": "Existing TrueForge session ID assigned to the Forge agent."
+        },
+        "forge.searchResultLimit": {
+          "type": "number",
+          "default": 100,
+          "minimum": 1,
+          "maximum": 200
+        }
+      }
+    }
+  },
+  "scripts": {
+    "compile": "node esbuild.mjs",
+    "watch": "node esbuild.mjs --watch",
+    "test": "tsx --test test/*.test.ts",
+    "package": "npm run compile && vsce package"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.32.2",
+    "@truefoundry/trueforge-sdk": "^0.185.0",
+    "diff": "^7.0.0",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.16.5",
+    "@types/vscode": "^1.95.0",
+    "esbuild": "^0.25.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.8.3",
+    "@vscode/vsce": "^3.2.0"
+  }
+}
